@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculate The weight of an object on a planet</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                  url('https://images.unsplash.com/photo-1580220266372-828f79c56d7b') no-repeat center center/cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h1 {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 2rem;
+      color: #fff;
+      text-shadow: 0 0 5px #0ff;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    input, select, button {
+      padding: 0.7rem 1rem;
+      margin: 0.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #1e90ff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #007acc;
+    }
+
+    .result {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .result img {
+      width: 120px;
+      height: auto;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding: 1rem;
+      width: 100%;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculate The Weight Of An Object On A Chosen Planet</h1>
+  <div class="container">
+    <input type="number" id="mass" placeholder="Mass in kilogram" />
+    <select id="planet">
+      <option value="">---select planet---</option>
+      <option value="Mercury">Mercury</option>
+      <option value="Venus">Venus</option>
+      <option value="Earth">Earth</option>
+      <option value="Mars">Mars</option>
+      <option value="Jupiter">Jupiter</option>
+      <option value="Saturn">Saturn</option>
+      <option value="Uranus">Uranus</option>
+      <option value="Neptune">Neptune</option>
+      <option value="Pluto">Pluto</option>
+    </select>
+    <button onclick="calculateWeight()">Calculate weight</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <footer>
+    &copy; 2025 Solar Weight Calculator | Built with love by Paul Adekanye. 
+  </footer>
+
+  <script>
+    const gravities = {
+      Mercury: 3.7,
+      Venus: 8.87,
+      Earth: 9.81,
+      Mars: 3.71,
+      Jupiter: 24.79,
+      Saturn: 10.44,
+      Uranus: 8.69,
+      Neptune: 11.15,
+      Pluto: 0.62
+    };
+
+    const images = {
+      Mercury: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Mercury_in_true_color.jpg',
+      Venus: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Venus-real_color.jpg',
+      Earth: 'https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg',
+      Mars: 'https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg',
+      Jupiter: 'https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg',
+      Saturn: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg',
+      Uranus: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Uranus2.jpg',
+      Neptune: 'https://upload.wikimedia.org/wikipedia/commons/5/56/Neptune_Full.jpg',
+      Pluto: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Nh-pluto-in-true-color_2x_JPEG-edit-frame.jpg'
+    };
+
+    function calculateWeight() {
+      const mass = parseFloat(document.getElementById('mass').value);
+      const planet = document.getElementById('planet').value;
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '';
+
+      if (!mass || !planet) {
+        resultDiv.innerHTML = '<p>Please enter a valid mass and select a planet.</p>';
+        return;
+      }
+
+      const gravity = gravities[planet];
+      const weight = (mass * gravity).toFixed(2);
+      const image = images[planet];
+
+      resultDiv.innerHTML = `
+        <h2>${planet}</h2>
+        <img src="${image}" alt="${planet}" />
+        <p>The weight of the object on <strong>${planet}</strong> is <strong>${weight} N</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>
